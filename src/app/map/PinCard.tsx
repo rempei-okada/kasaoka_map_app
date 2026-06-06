@@ -7,6 +7,8 @@ interface PinCardProps {
   selected: boolean;
 }
 
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+
 // SVG viewBox 0 0 100 130、穴の中心=(50,47)、半径=28 をピクセルに変換
 const PIN_W = 80;
 const PIN_H = 104;
@@ -34,7 +36,7 @@ export function PinCard({ pin, selected }: PinCardProps) {
       title={pin.title}
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/pin.svg" alt={pin.title} width={PIN_W} height={PIN_H} style={{ display: 'block' }} />
+      <img src={`${BASE_PATH}/pin.svg`} alt={pin.title} width={PIN_W} height={PIN_H} style={{ display: 'block' }} />
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={imgSrc}
