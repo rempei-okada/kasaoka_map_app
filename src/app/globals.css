@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+/* ─── カラーパレット ─── */
+:root {
+  --col-yellow:  #FFFF00;   /* 黄色    — プライマリアクセント */
+  --col-beige:   #dfd9c5;   /* ベージュ — メイン背景 */
+  --col-dark:    #3e3a39;   /* チャコール — プライマリテキスト */
+  --col-blue:    #9fbdc0;   /* ライトブルー — サブアクセント */
+  --col-white:   #ffffff;   /* 白      — カード背景 */
+  --col-gray:    #6b6560;   /* グレー  — セカンダリテキスト */
+  --background: var(--col-beige);
+  --foreground: var(--col-dark);
+}
+
+@theme inline {
+  --color-background: var(--col-beige);
+  --color-foreground: var(--col-dark);
+  --font-sans: var(--font-noto-sans-jp), "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+}
+
+body {
+  background: var(--col-beige);
+  color: var(--col-dark);
+  font-family: var(--font-noto-sans-jp), "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
+}
+
+/* ─── マップフィルター ─── */
+.wa-map-filter {
+  filter: sepia(0.22) saturate(0.82) brightness(1.04) hue-rotate(-8deg);
+}
+
+/* ─── ダイアログ背景（backdrop） ─── */
+dialog {
+  margin: auto;
+}
+
+dialog::backdrop {
+  background: rgba(62, 58, 57, 0.45);
+  backdrop-filter: blur(5px);
+}
+
+/* ─── ダイアログ出現アニメーション ─── */
+dialog[open] {
+  animation: wa-dialog-in 0.22s ease-out;
+}
+
+@keyframes wa-wave {
+  0%, 100% { transform: scaleY(0.5); }
+  50%       { transform: scaleY(1.4); }
+}
+
+@keyframes wa-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
