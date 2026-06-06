@@ -4,9 +4,9 @@ import { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 import { Pin, PinRawRow, UsePinsResult } from '@/types/pin';
 
-const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
+const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '';
 const CSV_URL_RAW =
-  process.env.NEXT_PUBLIC_CSV_URL ??
+  process.env.NEXT_PUBLIC_CSV_URL ||
   'https://docs.google.com/spreadsheets/d/1oxEOZJk9IhlgHtlNzU1SETdQVD1Clx9s/export?format=csv';
 const CSV_URL = CSV_URL_RAW.startsWith('/') ? `${BASE_PATH}${CSV_URL_RAW}` : CSV_URL_RAW;
 

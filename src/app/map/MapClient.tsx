@@ -8,8 +8,8 @@ import { ClusteredMarkers } from './ClusteredMarkers';
 import { PinDialog } from './PinDialog';
 import { ApiKeyMissing } from './ApiKeyMissing';
 
-const MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ?? 'AIzaSyDymVI_NxJtFshb7R1y-15npGAHATGEtlc';
-const MAP_ID = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID ?? 'DEMO_MAP_ID';
+const MAPS_API_KEY = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || 'AIzaSyDymVI_NxJtFshb7R1y-15npGAHATGEtlc';
+const MAP_ID = process.env.NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID || 'DEMO_MAP_ID';
 
 const DEFAULT_CENTER = { lat: 34.5004, lng: 133.5072 }; // 岡山県笠岡市
 const DEFAULT_ZOOM = 13;
