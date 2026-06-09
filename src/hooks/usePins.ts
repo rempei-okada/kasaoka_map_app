@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 import { Pin, PinRawRow, UsePinsResult } from '@/types/pin';
+import { normalizeImageUrl } from '@/lib/driveImage';
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '';
 const CSV_URL_RAW =
@@ -40,7 +41,7 @@ export function usePins(): UsePinsResult {
             lng: parseFloat(row.lng ?? ''),
             title: row.title?.trim() ?? '',
             message: row.message?.trim() ?? '',
-            imageUrl: row.imageUrl?.trim() || undefined,
+            imageUrl: normalizeImageUrl(row.imageUrl?.trim() || undefined),
             website: row.website?.trim() || undefined,
             googleMapsUrl: row.googleMapsUrl?.trim() || undefined,
             sponsorName: row.sponsorName?.trim() || undefined,
