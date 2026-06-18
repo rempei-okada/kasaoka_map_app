@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Papa from 'papaparse';
-import { Pin, PinRawRow, UsePinsResult } from '@/types/pin';
+import { Pin, MapConfig, PinRawRow, UsePinsResult } from '@/types/pin';
 import { normalizeImageUrl } from '@/lib/driveImage';
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '';
@@ -17,6 +17,7 @@ const CSV_URL = CSV_URL_RAW.startsWith('/') ? `${BASE_PATH}${CSV_URL_RAW}` : CSV
  */
 export function usePins(): UsePinsResult {
   const [pins, setPins] = useState<Pin[]>([]);
+  const [mapConfig, setMapConfig] = useState<MapConfig | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -34,7 +35,19 @@ export function usePins(): UsePinsResult {
           skipEmptyLines: true,
         });
 
+        // __config__ 行から初期表示設定を抽出
+        const configRaw = result.data.find((r) => r.id?.trim() === '__config__');
+        const parsedConfig: MapConfig | null = (() => {
+          if (!configRaw) return null;
+          const lat = parseFloat(configRaw.lat ?? '');
+          const lng = parseFloat(configRaw.lng ?? '');
+          const zoom = parseInt(configRaw.title ?? '');
+          if (isNaN(lat) || isNaN(lng)) return null;
+          return { lat, lng, zoom: isNaN(zoom) ? 13 : zoom };
+        })();
+
         const parsed: Pin[] = result.data
+          .filter((row) => row.id?.trim() !== '__config__')
           .map((row): Pin => ({
             id: row.id?.trim() || crypto.randomUUID(),
             lat: parseFloat(row.lat ?? ''),
@@ -50,7 +63,10 @@ export function usePins(): UsePinsResult {
           }))
           .filter((p) => !isNaN(p.lat) && !isNaN(p.lng));
 
-        if (!cancelled) setPins(parsed);
+        if (!cancelled) {
+          setPins(parsed);
+          setMapConfig(parsedConfig);
+        }
       })
       .catch((e: unknown) => {
         if (!cancelled) setError(e instanceof Error ? e.message : '不明なエラー');
@@ -64,5 +80,5 @@ export function usePins(): UsePinsResult {
     };
   }, []);
 
-  return { pins, loading, error };
+  return { pins, mapConfig, loading, error };
 }

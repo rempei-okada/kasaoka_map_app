@@ -39,9 +39,17 @@ export interface PinRawRow {
   sponsorMessage?: string;
 }
 
+/** スプレッドシートの __config__ 行から読み取るマップ初期表示設定 */
+export interface MapConfig {
+  lat: number;
+  lng: number;
+  zoom: number;
+}
+
 /** usePins フックが返す値 */
 export interface UsePinsResult {
   pins: Pin[];
+  mapConfig: MapConfig | null;
   loading: boolean;
   error: string | null;
 }
