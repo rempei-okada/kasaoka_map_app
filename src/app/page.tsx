@@ -138,7 +138,7 @@ export default function Home() {
           <div className="overflow-auto p-4">
             <iframe
               ref={iframeRef}
-              src="/map"
+              src="./map"
               width={iframeWidth}
               height={iframeHeight}
               style={{ border: 'none', display: 'block' }}
